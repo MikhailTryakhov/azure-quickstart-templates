@@ -213,12 +213,52 @@
   },
   "resources": [
     {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('newStorageAccountName')]",
       "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('VNetName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgname'))]"
+      ],
       "properties": {
-        "accountType": "[variables('storageAccountType')]"
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vNetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('Subnet1Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet1Prefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+              },
+              "routeTable": {
+                "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
+              }
+            }
+          },
+          {
+            "name": "[parameters('Subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+              }
+            }
+          },
+          {
+            "name": "[parameters('Subnet3Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet3Prefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+              }
+            }
+          }
+        ]
       }
     },
     {
@@ -294,55 +334,6 @@
               "addressPrefix": "[parameters('subnet3Prefix')]",
               "nextHopType": "VirtualAppliance",
               "nextHopIpAddress": "[variables('NvmPrivateIPAddress')]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('VNetName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]",
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgname'))]"
-      ],
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('vNetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('Subnet1Name')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnet1Prefix')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
-              },
-              "routeTable": {
-                "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
-              }
-            }
-          },
-          {
-            "name": "[parameters('Subnet2Name')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnet2Prefix')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
-              }
-            }
-          },
-          {
-            "name": "[parameters('Subnet3Name')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnet3Prefix')]",
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
-              }
             }
           }
         ]
@@ -555,6 +546,15 @@
             }
           ]
         }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('newStorageAccountName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
       }
     }
   ]
