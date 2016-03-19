@@ -29,7 +29,7 @@
 # Description:
 #  This script automates the partitioning and formatting of data disks
 #  Data disks can be partitioned and formatted as seperate disks or in a RAID0 configuration
-#  The scrtip will scan for unpartitioined and unformatted data disks and partition, format, and add fstab entries
+#  The script will scan for unpartitioned and unformatted data disks and partition, format, and add fstab entries
 # Parameters :
 #  1 - b: The base directory for mount points (default: /datadisks)
 #  2 - s  Create a striped RAID0 Array (No redundancy)
@@ -284,7 +284,11 @@ create_striped_volume()
 	[ -d "${MOUNTPOINT}" ] || mkdir -p "${MOUNTPOINT}"
 
 	#Make a file system on the new device
-	mkfs -t ext4 "${MDDEVICE}"
+	STRIDE=128 #(512kB stripe size) / (4kB block size)
+	PARTITIONSNUM=${#PARTITIONS[@]}
+	STRIPEWIDTH=$((${STRIDE} * ${PARTITIONSNUM}))
+
+	mkfs.ext4 -b 4096 -E stride=${STRIDE},stripe-width=${STRIPEWIDTH},nodiscard "${MDDEVICE}"
 
 	read UUID FS_TYPE < <(blkid -u filesystem ${MDDEVICE}|awk -F "[= ]" '{print $3" "$5}'|tr -d "\"")
 
@@ -296,7 +300,8 @@ create_striped_volume()
 check_mdadm() {
     dpkg -s mdadm >/dev/null 2>&1
     if [ ${?} -ne 0 ]; then
-        DEBIAN_FRONTEND=noninteractive apt-get -y install mdadm
+        apt-get -y update
+        DEBIAN_FRONTEND=noninteractive apt-get -y install mdadm --fix-missing
     fi
 }
 
