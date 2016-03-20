@@ -196,7 +196,7 @@
   "variables": {
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
-    "OSDiskName": "osdiskforwindowssimple",
+    "OSDiskName": "simpleOSDiskName",
     "storageAccountType": "Standard_LRS",
     "vmStorageAccountContainerName": "vhds",
     "vmName1": "[parameters('VM1Name')]",
@@ -209,7 +209,7 @@
     "subnet3Ref": "[concat(variables('vnetID'),'/subnets/', parameters('Subnet3Name'))]",
     "routeTableName": "[parameters('routeTableName')]",
     "NvmPrivateIPAddress": "[parameters('NVAPrivateIP')]",
-    "nsgname": "DefaultNSG"
+    "nsgName": "DefaultNSG"
   },
   "resources": [
     {
@@ -219,7 +219,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]",
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgname'))]"
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
       ],
       "properties": {
         "addressSpace": {
@@ -233,7 +233,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnet1Prefix')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
               },
               "routeTable": {
                 "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
@@ -245,7 +245,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnet2Prefix')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
               }
             }
           },
@@ -254,7 +254,7 @@
             "properties": {
               "addressPrefix": "[parameters('subnet3Prefix')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
               }
             }
           }
@@ -351,7 +351,7 @@
       "properties": {
         "ipConfigurations": [
           {
-            "name": "ipconfig1",
+            "name": "ipConfig1",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
@@ -377,7 +377,7 @@
       "properties": {
         "ipConfigurations": [
           {
-            "name": "ipconfig1",
+            "name": "ipConfig1",
             "properties": {
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[variables('NvmPrivateIPAddress')]",
@@ -405,7 +405,7 @@
       "properties": {
         "ipConfigurations": [
           {
-            "name": "ipconfig1",
+            "name": "ipConfig1",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
@@ -417,6 +417,15 @@
             }
           }
         ]
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('newStorageAccountName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
       }
     },
     {
@@ -433,7 +442,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computername": "[variables('vmName1')]",
+          "computerName": "[variables('vmName1')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -445,7 +454,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "osdisk",
+            "name": "osDisk",
             "vhd": {
               "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'1','.vhd')]"
             },
@@ -476,7 +485,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computername": "[variables('vmName2')]",
+          "computerName": "[variables('vmName2')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -488,7 +497,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "osdisk",
+            "name": "osDisk",
             "vhd": {
               "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'2','.vhd')]"
             },
@@ -519,7 +528,7 @@
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computername": "[variables('vmName3')]",
+          "computerName": "[variables('vmName3')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -531,7 +540,7 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "osdisk",
+            "name": "osDisk",
             "vhd": {
               "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'3','.vhd')]"
             },
@@ -546,15 +555,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('newStorageAccountName')]",
-      "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "properties": {
-        "accountType": "[variables('storageAccountType')]"
       }
     }
   ]
