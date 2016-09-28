@@ -1,0 +1,235 @@
+{
+    "name": "MyIpV4AndV6LB1",
+    "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1",
+    "location": "North US",
+    "tags": { “key”: “value” } ,
+     “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+ 
+    "properties": { 
+        "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+        "frontendIPConfigurations":[
+          {               
+            "name": "myIPv4Vip1",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/MyIpV4AndV6LB1/frontendIPConfigurations/myIPv4Vip1",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+   
+                "subnet":,
+                "privateIPAddress": 
+                "privateIPAllocationMethod": 
+                "publicIPAddress": {"id": "/subscriptions/{guid}/../Microsoft.Network/publicIPAddresses/ myIPv4PublicIp1"},
+                "loadBalancingRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/loadBalancingRules/v4Rule1"}  
+                ],
+                "outboundNatRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/outboundNatRules/V4Rule1"}  
+                ],
+                "inboundNatRules": [               
+                ]
+            }
+        },
+        {               
+            "name": "myIPv6Vip1",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/myIPv6Vip1",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+   
+                "subnet":
+                "privateIPAddress": 
+                "privateIPAllocationMethod":
+                "publicIPAddress": {"id": "/subscriptions/{guid}/../Microsoft.Network/publicIPAddresses/ myIPv6PublicIp1"},
+                "loadBalancingRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/loadBalancingRules/IPv6Rule1"}  
+                ],
+                "outboundNatRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/outboundNatRules/IPv6Rule1"}  
+                ],
+                "inboundNatRules": [                 
+                ]
+            }
+        }
+        ],
+ 
+        "backendAddressPools":[
+        {
+            "name": "IPv4BackendPool1",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/backendAddressPools/IPv4BackendPool1”,
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "backendIPConfigurations": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm1nic1/ipConfigurations/myIpV4Ip1"} ,
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm2nic1/ipConfigurations/myIpV4Ip1"}  
+                ],
+                "loadBalancingRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/loadBalancingRules/ IPv4Traffic "}  
+                ],	
+                "outboundNatRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/outboundNatRules/ IPv4Rule1"}  
+                ]
+            }
+        }, 
+{
+            "name": "IPv6BackendPool1",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/backendAddressPools/IPv6BackendPool1”,
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "backendIPConfigurations": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm1nic1/ipConfigurations/myIpV6Ip1"},
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm2nic1/ipConfigurations/myIpV6Ip1"}   
+                ],
+                "loadBalancingRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/loadBalancingRules/ IPv6Traffic "}  
+                ],
+                "outboundNatRules": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/outboundNatRules/ IPv6Rule1"}  
+                ]
+            }
+        }
+ 
+        ],
+ 
+        "loadBalancingRules":[
+          {
+            "name": "IPv4Traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/loadBalancingRules/ IPv4Traffic ",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "frontendIPConfiguration":              
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/ myIPv4Vip1"},
+                "backendAddressPool": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/backendAddressPool/ IPv4BackendPool1"},
+                "protocol": "Tcp",
+                "frontendPort": 80,
+                "backendPort": 8080,
+                "probe": { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/probes/probe1"},
+                "enableFloatingIP": true | false,
+                "idleTimeoutInMinutes": 4,
+               “loadDistribution”: ”Default|SourceIP|SourceIPProtocol”,
+            }
+           }
+        },
+        {
+            "name": "IPv6Traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/loadBalancingRules/ IPv6Traffic ",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "frontendIPConfiguration":              
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/ myIPv6Vip1"},
+                "backendAddressPool": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/backendAddressPool/ IPv6BackendPool1"},
+                "protocol": "Tcp",
+                "frontendPort": 80,
+                "backendPort": 8081,
+                "probe": { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/probes/probe1"},
+                "enableFloatingIP": true | false,
+                "idleTimeoutInMinutes": 4,
+               “loadDistribution”: ”Default|SourceIP|SourceIPProtocol”,
+            }
+        }
+        ],
+ 
+        "probes": [
+        {
+            "name": "my probe 1",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/probes/my probe 1",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "protocol": "Http|Tcp",
+                "port": 8080,
+                "requestPath": "myprobeapp1/myprobe1.svc",
+                "intervalInSeconds": 5, 
+                "numberOfProbes": 16,
+                "loadBalancingRules": [
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/myLB1/loadBalancingRules/rule1"}
+                ],
+            }
+        }
+        ],
+ 
+        "inboundNatRules":[
+          {
+            "name": "IPv4 Traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/inboundNatRules/IPv4 Traffic",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "frontendIPConfiguration": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/myIPv4Vip1"},
+                "backendIPConfiguration": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm1nic1/ipConfigurations/myIpV4Ip1"},
+                "protocol": "Tcp",
+                "frontendPort": 3389,
+                "backendPort": 3389
+            }
+        },
+        {
+            "name": "IPv6 Traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/inboundNatRules/IPv6 Traffic",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "frontendIPConfiguration": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/myIPv6Vip1"},
+                "backendIPConfiguration": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/networkInterfaces/vm1nic1/ipConfigurations/myIpV6Ip1"},
+                "protocol": "Tcp",
+                "frontendPort": 3389,
+                "backendPort": 3389
+            }
+        }
+        ],
+ 
+        "outboundNatRules":[
+          {
+            "name": "All IP v4 outbound traffic",
+               ...
+         },
+         {
+            "name": "All IP v6 outbound traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/outboundNatRules/All IP v6 outbound traffic",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+        
+                "frontendIPConfigurations": [               
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/myIPv6Vip1"}  
+                ],
+                "backendAddressPool": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/MyIpV4AndV6LB1/backendAddressPool/IPv6BackendPool1"},
+                “allocatedOutboundPorts”: 1024
+            }
+        }
+        ]
+
+"inboundNatPools":[
+          {
+            "name": "IPv4 Traffic",
+            "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/inboundNatPools/IPv4 Traffic",
+            “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
+            "properties": { 
+                "provisioningState": “Updating|Deleting|Failed|Succeeded”,
+    
+                "frontendIPConfiguration": 
+                    { "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ MyIpV4AndV6LB1/frontendIPConfigurations/myIPv4Vip1"},
+             …
+             …
+            }
+           }
+        }
+        ],
+    }
+} 
