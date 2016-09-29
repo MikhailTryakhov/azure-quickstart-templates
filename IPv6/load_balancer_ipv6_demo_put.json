@@ -1,7 +1,7 @@
 {
     "name": "myIPv4IPv6Lb",
     "id": "/subscriptions/{guid}/../Microsoft.Network/loadBalancers/ myIPv4IPv6Lb",
-    "location": "North US",
+    "location": "West US",
     "tags": { “key”: “value” } ,
     “etag”: “W/\”00000000-0000-0000-0000-000000000000\”“,
  
